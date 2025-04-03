@@ -1,0 +1,269 @@
+openapi: 3.1.0
+info:
+  title: ToDo API
+  description: API для управления задачами
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000
+    description: Локальный сервер разработки
+
+paths:
+  /:
+    get:
+      summary: Главная страница
+      operationId: getIndex
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Главная страница
+
+  /register:
+    post:
+      summary: Регистрация пользователя
+      operationId: registerUser
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, username, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                username:
+                  type: string
+                password:
+                  type: string
+                  format: password
+      responses:
+        "201":
+          description: Успешная регистрация
+        "400":
+          description: Ошибка валидации
+
+  /login:
+    post:
+      summary: Авторизация пользователя
+      operationId: loginUser
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        "200":
+          description: Успешный вход, возвращает JWT-токен
+        "401":
+          description: Неверный email или пароль
+
+  /logout:
+    get:
+      summary: Выход из системы (инвалидация токена)
+      operationId: logoutUser
+      tags:
+        - Auth
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Успешный выход
+
+  /todos:
+    get:
+      summary: Получение списка задач пользователя
+      operationId: getTodos
+      tags:
+        - ToDo
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Список задач
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    status:
+                      type: string
+
+  /create-task:
+    post:
+      summary: Создание новой задачи
+      operationId: createTask
+      tags:
+        - ToDo
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, description, status]
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                status:
+                  type: string
+      responses:
+        "201":
+          description: Задача создана
+        "400":
+          description: Ошибка валидации
+
+  /update-task:
+    post:
+      summary: Обновление задачи
+      operationId: updateTask
+      tags:
+        - ToDo
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id, title, description, status]
+              properties:
+                id:
+                  type: integer
+                title:
+                  type: string
+                description:
+                  type: string
+                status:
+                  type: string
+      responses:
+        "200":
+          description: Задача обновлена
+        "404":
+          description: Задача не найдена
+
+  /delete-task:
+    post:
+      summary: Удаление задачи
+      operationId: deleteTask
+      tags:
+        - ToDo
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id]
+              properties:
+                id:
+                  type: integer
+      responses:
+        "200":
+          description: Задача удалена
+        "404":
+          description: Задача не найдена
+
+  /profile:
+    get:
+      summary: Получение данных профиля
+      operationId: getProfile
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Данные профиля
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                    format: email
+                  username:
+                    type: string
+        "401":
+          description: Неавторизованный доступ
+
+  /update-profile:
+    post:
+      summary: Обновление профиля пользователя
+      operationId: updateProfile
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, username]
+              properties:
+                email:
+                  type: string
+                  format: email
+                username:
+                  type: string
+      responses:
+        "200":
+          description: Профиль обновлен
+        "400":
+          description: Ошибка валидации
+
+  /dashboard:
+    get:
+      summary: Получение данных дашборда
+      operationId: getDashboard
+      tags:
+        - Dashboard
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Данные дашборда
+        "401":
+          description: Неавторизованный доступ
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
