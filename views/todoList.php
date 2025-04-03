@@ -1,6 +1,4 @@
 <?php 
-    error_reporting(E_ALL | ~E_NOTICE | ~E_WARNING | ~E_NOTICE);
-    session_start();
     $user = $_SESSION['user']; 
 ?>
 <?php $task = $_SESSION['tasks']; ?>
@@ -54,24 +52,24 @@
             </div>
             <button type="submit" class="btn btn-success mt-5">Создать</button>
         </form>
-        <form class="sortForms" method="post" action="/sort-by-status">
-            <p>Отфильтровать по статусу:</p>
-            <select id="status" name="status">
-                    <option value="in_progress">В работе</option>
-                    <option value="complete">Завершено</option>
-                    <option value="deadline">Дедлайн</option>
-            </select>
-            <button type="submit" class="btn btn-success">Отфильтровать</button>
-        </form>
-        <form class="sortForms" method="post" action="/sort-by-data">
-            <p>сортировка по дате:</p>
-            <select id="date" name="date">
-                    <option value="newer">сначала новые</option>
-                    <option value="older">сначала старые</option>
-            </select>
-            <button type="submit" class="btn btn-success">сортировать</button>
-        </form>
         <? if(count($task) > 1):?>
+            <form class="sortForms" method="post" action="/sort-by-status">
+                <p>Отфильтровать по статусу:</p>
+                <select id="status" name="status">
+                        <option value="in_progress">В работе</option>
+                        <option value="complete">Завершено</option>
+                        <option value="deadline">Дедлайн</option>
+                </select>
+                <button type="submit" class="btn btn-success">Отфильтровать</button>
+            </form>
+            <form class="sortForms" method="post" action="/sort-by-data">
+                <p>сортировка по дате:</p>
+                <select id="date" name="date">
+                        <option value="newer">сначала новые</option>
+                        <option value="older">сначала старые</option>
+                </select>
+                <button type="submit" class="btn btn-success">сортировать</button>
+            </form>     
             <?php foreach($task as $taskItem): ?>
                 <?php switch($taskItem['status']){
                     case 'В работе': 

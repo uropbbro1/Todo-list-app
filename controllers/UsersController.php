@@ -13,16 +13,7 @@ class UsersController{
     }
 
     public function index() {
-        session_start();
-        if($_SESSION['user']['id']){
-            //new jsonResponseController()->jsonResponse(['message' => 'Запрос успешно выполнен'], 200);
-            header("Location: /todos");
-            return include __DIR__ . '/../views/todoList.php';
-        }else{
-            //new jsonResponseController()->jsonResponse(['message' => 'Запрос успешно выполнен'], 200);
-            header("Location: /");
-            return include __DIR__ . '/../views/main.php';
-        }
+        return include __DIR__ . '/../views/main.php';
     }
 
     public function getUser(){
