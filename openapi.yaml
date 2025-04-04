@@ -261,6 +261,53 @@ paths:
         "401":
           description: Неавторизованный доступ
 
+  /sortByStatus:
+    post:
+      summary: Фильтрация задач пользователя по статусу
+      operationId: sortByStatus
+      tags:
+        - ToDo
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_id, status]
+              properties:
+                user_id:
+                  type: integer
+                status:
+                  type: string
+      responses:
+        "200": 
+          description: Данные только определённого статуса
+  
+  /sort-by-data:
+    post:
+      summary: сортировка задач по дате
+      operationId: sortByData
+      tags:
+        - ToDo
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_id, date]
+              properties:
+                user_id:
+                  type: integer
+                date:
+                  type: string
+      responses:
+        "200": 
+          description: отсортированные задачи пользователя
 components:
   securitySchemes:
     BearerAuth:
