@@ -3,7 +3,7 @@
     "description": "ToDo application",
     "type": "project",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",
         "firebase/php-jwt": "^6.11",
