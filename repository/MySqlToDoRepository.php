@@ -43,13 +43,20 @@ class MySqlToDoRepository{
         $this->db->exec($query);
     }
 
-    public function findBy(int|string $id) {
+    public function findBy(int|string $id, int $page, int $limit): int {
         $query= "SELECT * FROM todos WHERE todos.user_id = :user_id";
         $sth = $this->db->prepare($query);
         $sth->execute(['user_id' => $id]);
         $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         $_SESSION['user'] = ["id" => $id];
-        $_SESSION['tasks']  = $result;
+        if(count($result) <= $limit){
+            $_SESSION['tasks']  = $result;
+        }else{
+            $chunked_array = array_chunk($result, $limit);
+            $index = $page - 1;
+            $_SESSION['tasks']  = $chunked_array[$index];
+        }
+        return count($result);
     }
 
     public function create(array $values): void {

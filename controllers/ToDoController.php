@@ -12,9 +12,15 @@ class ToDoController{
         $this->toDoService = $toDoService;
     }
 
-    public function getToDosById(){
+    public function getToDosById($data){
         session_start();
-        $this->toDoService->getToDosById($_SESSION['user']['id']);
+        $page = isset($data['page']) ? (int)$data['page'] : 1;
+        $limit = 2;
+        if(!$_SESSION['user']['id']){
+            return new jsonResponseController()->jsonResponse(['message' => 'Несанкционированный доступ'], 401);
+        }
+        $totalTasks = $this->toDoService->getToDosById($_SESSION['user']['id'], $page, $limit);
+        $totalPages = ceil($totalTasks / $limit);
         //new jsonResponseController()->jsonResponse(['message' => 'Запрос успешно выполнен'], 200);
         return include __DIR__ . '/../views/todoList.php';
     }

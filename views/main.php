@@ -6,6 +6,7 @@
     <title>Main</title>
     <link rel="stylesheet" href="/css/base.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/js/base.js"></script>
 </head>
 <header>
 
@@ -13,6 +14,7 @@
 <body>
     <h1>Добро пожаловать в приложение "Список задач"</h1>
     <p><button class="btn" style="color:blue;" onclick="openRegister()">Зарегистрируйтесь</button> или <button class="btn" style="color:blue;" onclick="openLogin()">войдите</button>, чтобы начать пользоваться приложением!</p>
+    
     <form method="post" action="/login" class="loginForm no-display" novalidate>
         <div class="mb-3 d-flex ms-5 me-5 gap-5">
             <b class="login" onclick="OpenLogin()">Вход</b>
@@ -40,6 +42,7 @@
         </div> 
         <button type="submit" class="btn btn-success mt-5">Войти</button>
     </form>
+
     <form method="post" action="/register" class="registerForm no-display" novalidate>
         <div class="mb-3 d-flex ms-5 me-5 gap-5">
             <span></span>
@@ -86,28 +89,3 @@
     
 </footer>
 </html>
-
-<script>
-    function openLogin(){
-        let form = document.querySelector('.loginForm');
-        form.classList.remove('no-display');
-    }
-</script>
-<script>
-    function CloseLogin(){
-        let form = document.querySelector('.loginForm');
-        form.classList.add('no-display');
-    }
-</script>
-<script>
-    function openRegister(){
-        let form = document.querySelector('.registerForm');
-        form.classList.remove('no-display');
-    }
-</script>
-<script>
-    function CloseRegister(){
-        let form = document.querySelector('.registerForm');
-        form.classList.add('no-display');
-    }
-</script>

@@ -40,7 +40,6 @@ class Router {
                     $controller = $this->instances[$controllerClass];
 
                     if (method_exists($controller, $methodName)) {
-                        // Передаем GET и POST данные в метод
                         $data = $_GET + ($_POST ?? []);
 
                         $controller->$methodName($data);

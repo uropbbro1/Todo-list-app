@@ -12,6 +12,7 @@
     <title>Main</title>
     <link rel="stylesheet" href="/css/base.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/js/base.js"></script>
 </head>
 <header>
     <div class="menu">
@@ -88,35 +89,10 @@
             </div>
         </div>
     <? else: ?>
-        <p>У вас пока нет задач, создайте их на странице с задачами чтобы они появились здесь</p>
-        <div class="container">
-            <div class="inProgress">
-
-            </div>
-            <div class="complete">
-                
-            </div>
-            <div class="deadline">
-                
-            </div>
-        </div>
+        <h1>У вас пока нет задач, создайте их на странице с задачами чтобы они появились здесь</h1>
     <? endif; ?>
 </body>
 <footer>
     
 </footer>
 </html>
-
-<script>
-    function openTask(id){
-        let task = document.querySelector(`#task-popup${id}`);
-        task.classList.remove('no-display');
-    }
-</script>
-
-<script>
-    function closeTask(id){
-        let task = document.querySelector(`#task-popup${id}`);
-        task.classList.add('no-display');
-    }
-</script>

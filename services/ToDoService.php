@@ -10,8 +10,8 @@ class ToDoService{
         $this->toDoRepository = $repository;
     }
 
-    public function getToDosById(int $id){
-        return $this->toDoRepository->findBy($id);
+    public function getToDosById(int $id, int $page, int $limit){
+        return $this->toDoRepository->findBy($id, $page, $limit);
     }
 
     public function createToDoItem(array $item){
